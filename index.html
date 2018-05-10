@@ -1,0 +1,162 @@
+<!doctype html>
+<html lang="es">
+	<head>
+		<meta charset="UTF-8">
+		<title>Dawmana</title>
+		<link rel="stylesheet" href="css/main.css">
+		<link rel="stylesheet" href="js/jquery-ui-1.12.1/jquery-ui.min.css">
+		<script src="js/jquery-ui-1.12.1/external/jquery/jquery.js"></script>
+		<script src="js/jquery-ui-1.12.1/jquery-ui.min.js"></script>
+		<script src="js/main.js"></script>
+	</head>
+	<body>
+		<noscript><h3>Por favor, active javaScript en su navegador</h3></noscript>
+		<div id="cartel">
+		    <img src="images/cartelSysmana.jpg" alt="">
+		</div>
+		<div id="pag_entera">
+			<header>
+				<h1>Dawmana 2018</h1>
+			</header>
+			<nav>
+				<ul>
+					<li><input type="button" id="inicio" value="Inicio"></li>
+					<li><input type="button" id="actividades" value="Actividades"></li>
+					<li><input type="button" id="ponentes" value="Ponentes"></li>
+					<li><input type="button" id="registroasistentes" value="Registro"></li>
+					<li><input type="button" id="accesousuarios" value="Acceso"></li>
+					<li><input type="button" id="cartelespasados" value="Otras Sysmanas"></li>
+				</ul>
+			</nav>
+			<main>
+				<div id="inicio">
+					<h1>Bienvenidos a la Dawmana 2018</h1>
+					<div>
+						<img src="images/cartelSysmana.jpg" alt="">
+						<p>Departamento de Informática y Comunicaciones
+						I.E.S. Gran Capitán
+						Del 29/1/2018 al 2/2/2018
+						Galería (próximamente)
+
+						Son diez las ediciones que los docentes del Departamento de Informática y Comunicaciones llevamos organizando la SYSMANA. Del 29 de enero al 2 de febrero nuestro alumnado participará en numerosas actividades gracias a la colaboración de profesionales del sector de la Informática. Próximamente publicaremos el programa de esta X edición.</p>
+					</div>
+				</div>
+				<div id="actividad">
+					<h1>Actividades</h1>
+					<div id="tabs">
+						<ul>
+							<li><a href="#dlunes">Lunes</a></li>
+							<li><a href="#dmartes">Martes</a></li>
+							<li><a href="#dmiercoles">Miercoles</a></li>
+							<li><a href="#djueves">Jueves</a></li>
+							<li><a href="#dviernes">Viernes</a></li>
+							<li><a href="#dextra">Extra</a></li>
+						</ul>
+						<div id="dlunes">
+							<table id="lunes">
+							</table>
+						</div>
+						<div id="dmartes">
+							<table id="martes">
+							</table>
+						</div>
+						<div id="dmiercoles">
+							<table id='miercoles'>
+							</table>
+						</div>
+						<div id="djueves">
+							<table id="jueves">
+							</table>
+						</div>
+						<div id="dviernes">
+							<table id="viernes">
+							</table>
+						</div>
+						<div id="dextra">
+							<table id="extra">
+							</table>
+						</div>
+					</div>
+				</div>
+				<div id="dponentes">
+					<h1>Ponentes</h1>
+					<div id="listar"></div>
+				</div>
+				<div id="carteles">
+					<h1>Otras sysmanas</h1>
+					<div id="listacarteles"></div>
+				</div>
+				<div id="regasistentes">
+					<h2>Registro de Asistentes</h2>
+					<form action="" id="formulario">
+						<label for="name">Nombre:</label>
+						<input type="text" name="name" id="name"><br>
+						<span id="errname"></span>
+						<label for="lastnames">Apellidos:</label>
+						<input type="text" name="lastnames" id="lastnames">
+						<span id="errlastname"></span>
+						<label for="dni">DNI:</label>
+						<input type="text" name="dni" id="dni"></p><br>
+						<span id="errdni"></span>
+						<label for="email">E-mail:</label>
+						<input type="text" name="email" id="email"></p><br>
+						<span id="erremail"></span>
+						<label for="from">Procedencia</label>
+						<input type="text" name="from" id="from"></p><br>
+						<span id="errfrom"></span>
+						<input type="button" id="clear" name="clear" value="Borrar">
+						<input type="submit" id="send" name="send" value="Enviar">
+					</form>
+				</div>
+				<div id="daccesousuarios">
+					<h2>Acceso de ponentes</h2>
+					<form action="">
+						<input type="text" id="usuario" placeholder="Usuario">
+						<input type="password" id="pass" placeholder="Contraseña">
+						<input type="submit" id="login" value="Iniciar sesion">
+					</form>
+				</div>
+				<div id="modDatos">
+					<h2>Editar datos</h2>
+					<form id="formmoddatos">
+						<label for="name">Nombre:</label>
+						<input type="text" name="name" id="name"><br>
+						<span id="errname"></span>
+						<label for="lastnames">Apellidos:</label>
+						<input type="text" name="lastnames" id="lastnames"><br>
+						<span id="errlastname"></span>
+						<label for="from">Procedencia</label>
+						<input type="text" name="from" id="from"><br>
+						<span id="errfrom"></span>
+						<label for="dayspref">Fecha inicio:</label>
+						<input type="text" name="dayspref" id="dayspref" placeholder="Primer día"><br>
+						<label for="daysprefend">Fecha final:</label>
+						<input type="text" name="daysprefend" id="daysprefend" placeholder="Día final">
+						<span id="errobs"></span>
+						<label for="obs">Observaciones:</label>
+						<textarea name="obs" id="obs" cols="30" rows="6" placeholder="Observaciones"></textarea>
+						<label for="sponsor">¿Puede patrocinarnos?</label>
+						<input name="sponsor" id="sponsor" type="checkbox"><br><br>
+						<input type="button" id="editData" value="Guardar cambios" />
+					</form>  
+				</div>
+				<div>					
+				</div>
+			</main>
+			<footer>
+				<h3>Patrocinadores</h3>
+				<div id="sponsor">
+					<img src="images/patrocinadores/dobuss.png" alt="">
+					<img src="images/patrocinadores/grayHats.png" alt="">
+					<img src="images/patrocinadores/innovationGroup.png" alt="">
+					<img src="images/patrocinadores/laZona.png" alt="">
+					<img src="images/patrocinadores/redsys.png" alt="">
+					<img src="images/patrocinadores/sopinet.png" alt="">
+					<img src="images/patrocinadores/svt.png" alt="">
+					<img src="images/patrocinadores/uco.png" alt="">
+					<img src="images/patrocinadores/wul4.png" alt="">
+				</div>
+			</footer>
+		</div>
+	</body>
+</html>

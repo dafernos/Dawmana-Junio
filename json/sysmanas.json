@@ -1,0 +1,42 @@
+{
+	"primera":{
+		"foto":"images/sysmanas/Isysmana.jpg",
+		"nombre":"I Sysmana"
+	},
+	"segunda":{
+		"foto":"images/sysmanas/IIsysmana.jpg",
+		"nombre":"II Sysmana"
+	},
+	"tercera":{
+		"foto":"images/sysmanas/IIIsysmana.jpg",
+		"nombre":"III Sysmana"
+	},
+	"cuarta":{
+		"foto":"images/sysmanas/IVsysmana.jpg",
+		"nombre":"IV Sysmana"
+	},
+	"quinta":{
+		"foto":"images/sysmanas/Vsysmana.jpg",
+		"nombre":"V Sysmana"
+	},
+	"sexta":{
+		"foto":"images/sysmanas/VIsysmana.jpg",
+		"nombre":"VI Sysmana"
+	},
+	"septima":{
+		"foto":"images/sysmanas/VIIsysmana.jpg",
+		"nombre":"VII Sysmana"
+	},
+	"octava":{
+		"foto":"images/sysmanas/VIIIsysmana.jpg",
+		"nombre":"VIII Sysmana"
+	},
+	"novena":{
+		"foto":"images/sysmanas/IXsysmana.jpg",
+		"nombre":"IX Sysmana"
+	},
+	"decima":{
+		"foto":"images/sysmanas/Xsysmana.jpg",
+		"nombre":"X Sysmana"
+	}
+}
