@@ -1,4 +1,5 @@
-{
+{   
+    var $main,$listar,$login,$accesousuarios,$listarCarteles,$lunes,$martes,$miercoles,$jueves,$viernes,$extra,$modponencia,$moddatos,fRegAss,fRegPon,fModDat;
     $(function () {
         setTimeout(
             function(){
@@ -14,6 +15,7 @@
         $viernes=$('#viernes');
         $extra=$('#extra');
         $listar=$('#listar');
+        $listarCarteles=$("#listacarteles");
         $login = $("#login").on("click", login);       
         $accesoUsuarios=$('#accesousuarios').on('click',accesousuarios);
         $('#tabs').tabs();
@@ -21,19 +23,37 @@
         $('#ponentes').on('click',cargarPonentes);
         $('#registroasistentes').on('click',registroAsistentes);
         $('#cartelespasados').on('click',carSys);
+        $('#inicio').on('click',inicio);
+        $fRegAss=$('.in').validacion();
+        $fRegPon=$('.tin').validacion();
+        $fModDat=$('.din').validacion();
+        valfechas();
+        $('#formulario').on('submit',function (e) {
+            e.preventDefault();
+            $fRegAss.validacionsubmit();
+        })
+        $('#formmoddatos').on('submit',function (e) {
+            e.preventDefault();
+            $fModDat.validacionsubmit();
+        })
+        $('#regpos').on('submit',function (e) {
+            e.preventDefault();
+            $fRegPon.validacionsubmit();
+        })
     });
-
-    let cargaActividades = function (e){
+    let inicio= function(){
+        location.reload();
+    }
+    let cargaActividades = function (){
         $lunes.html('<tr><td>Actividad</td><td>Ponentes</td><td>Procedencia</td><td>Hora</td></tr>');
         $martes.html('<tr><td>Actividad</td><td>Ponentes</td><td>Procedencia</td><td>Hora</td></tr>');
         $miercoles.html('<tr><td>Actividad</td><td>Ponentes</td><td>Procedencia</td><td>Hora</td></tr>');
         $jueves.html('<tr><td>Actividad</td><td>Ponentes</td><td>Procedencia</td><td>Hora</td></tr>');
         $viernes.html('<tr><td>Actividad</td><td>Ponentes</td><td>Procedencia</td><td>Hora</td></tr>');
         $extra.html('<tr><td>Actividad</td><td>Ponentes</td><td>Procedencia</td><td>Hora</td></tr>');
-        $main.children('div')
-            .hide();
-        $('#actividad').show();
-        
+        ocultarTodo();
+        $('#actividad').slideDown('slow')
+            .show();
         $.getJSON({
             url:"json/programa.json",
             success:function(data){
@@ -81,79 +101,232 @@
         });
     };
 
-    let cargarPonentes = function (e) {
-        $main.children('div')
-            .hide();
-        $('#dponentes').show();
+    let cargarPonentes = function () {
+        ocultarTodo();
+        $('#dponentes').slideDown('slow')
+            .show();
         $listar.html('');
         $.getJSON({
             url:"json/programa.json",
             success:function(data){
                 $.each(data,function(index, dia) {
                     $.each(dia,function (index2, actividad) {
-                        ponentes=$('<div></div>')
+                        $ponentes=$('<div></div>')
                             .append($('<img src="'+actividad.foto+'" alt="">'))
                             .append($('<h3></h3>').html(actividad.nombrePonentes));
-                        $listar.append(ponentes);
+                        $listar.append($ponentes);
                     });
                 });
             }
         });
     }
 
-    let registroAsistentes = function (e) {
-        $main.children('div').hide();
-        $('#regasistentes').show();
+    let registroAsistentes = function () {
+        ocultarTodo();
+        $('#regasistentes').slideDown('slow')
+            .show();
     }
 
-    let accesousuarios = function (e) {  
-        $main.children('div').hide();
-        $('#daccesousuarios').show();
+    let accesousuarios = function () {  
+        ocultarTodo();
+        $('#daccesousuarios').slideDown('slow')
+            .show();
         $login.on('submit',login);
     }
-
-    let login = function (e) {
-        e.preventDefault();
+    let ocultarTodo = function(){
+        $main.children('div')
+            .hide();
+    }
+    let login = function () {
         if ($("#usuario").val() === "dario" && $("#pass").val() === "dario"){
-            $main.children('div')
-                .hide();
-            $accesoUsuarios.parent()
-                .remove();
-            $ponencia=$('<li><input type="button" id="ponencia" value="Registrar Ponencia"></a></li>')
+            $('#accesousuarios').parent().remove();
+            $modponencia=$('<li><input type="button" id="ponencia" value="Registrar Ponencia"></a></li>')
                 .on('click',registrarPonencia);
-            $datos=$('<li><input type="button" id="datos" value="Modificar datos" ></li>')
+            $moddatos=$('<li><input type="button" id="datos" value="Modificar datos" ></li>')
                 .on('click',modificarDatos);
-            $("nav>ul").append($ponencia)
-                .append($datos);
+            $cerrar=$('<li><input type="button" id="cerrarSession" value="Cerrar session" ></li>')
+                .on('click',cerrarSession);
+            $("nav>ul").append($modponencia)
+                .append($moddatos)
+                .append($cerrar);
             modificarDatos();
-        }else $("#errorLogin").html("El usuario o la contraseña no coinciden");
+        }else $("#erLogin").html("El usuario o la contraseña no coinciden");
+    };
+    let cerrarSession = function(){
+        ocultarTodo();
+        $modponencia.remove();
+        $moddatos.remove();
+        $cerrar.remove();
+        $accesousuarios=$('<li><input type="button" id="accesousuarios" value="Acceso"></li>')
+            .on('click',accesousuarios)
+            .click();
+        $("nav>ul").append($accesousuarios);
+    }
+    let registrarPonencia = function () {
+        ocultarTodo();
+        $('#regPonencia').slideDown('slow')
+            .show();
     };
 
-    let registrarPonencia = function (e) {
-        $main.children('div')
-            .hide();
+    let modificarDatos = function () {
+        ocultarTodo();
+        $('#modDatos').slideDown('slow')
+            .show();
     };
 
-    let modificarDatos = function (e) {
-        $main.children('div')
-            .hide();
-        $('#modDatos').show();
-    };
-
-    let carSys = function (e) {       
-        $main.children('div').hide();
-        $('#carteles').show();
-        $("#listacarteles").html("");
+    let carSys = function () {       
+        ocultarTodo();
+        $('#carteles').slideDown('slow')
+            .show();
+        $listarCarteles.html("");
         $.getJSON({
             url:"json/sysmanas.json",
             success:function(data){
                 $.each(data,function (indice, sysmana) {
                     $cartel=$('<div></div>')
-                        .append($('<h3>' + sysmana.nombre + '</h3>'))
-                        .append($('<img src="'+sysmana.foto+'" alt="">'));
-                    $("#listacarteles").append($cartel);
+                        .append($('<h3>'+sysmana.nombre+'</h3>'))
+                        .append($('<img class="fotoCartel" src="'+sysmana.foto+'" alt="">'));
+                       $listarCarteles.append($cartel);
+                       insertarSysmanas(data);
                 });
+                
             }
         });
     };
+    $.fn.validacion = function(options) {
+        let opts = $.extend(true, $.fn.validacion.defaults, options);
+        this.each(function() {           
+        }).on('blur',function(event) {
+            let $this = $(this);
+            selector=$this.attr('class').substr($this.attr('class').indexOf(' '));
+            regex=$this.attr('class').replace(selector,"");
+            error="Rerr"+$this.attr('id');
+            if(opts[regex].test($this.val())) {
+                $this.css('border','1px solid #2ECC40');
+                $('#'+error).text('');   
+            }else{
+                $('#'+error).text('Error');
+                $this.css('border','1px solid #FF4136');    
+            }
+        });
+        return this;
+    };
+    $.fn.validacion.defaults = {
+        'nombre':/[a-zA-Z]{3,}/,
+        'apellido':/[a-zA-Z]{3,} [a-zA-Z]{3,}/,
+        'dni':/^(\d{8})[- ]?([a-z])$/i,
+        'email':/[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,4}/, 
+        'imagen':/.*\.png/, 
+        'texto':/[\w\d]{3,},?/g, 
+        'numero':/[1-9]+/
+    };
+    $.fn.validacionsubmit = function(options) {
+        let opts = $.extend(true, $.fn.validacion.defaults, options);
+        this.each(function() {     
+            let $this = $(this);
+            selector=$this.attr('class').substr($this.attr('class').indexOf(' '));
+            regex=$this.attr('class').replace(selector,"");
+            error="Rerr"+$this.attr('id');
+            if(opts[regex].test($this.val())) {
+                $this.css('border','1px solid #2ECC40');
+                $('#'+error).text('');   
+            }else{
+                $('#'+error).text('Error');
+                $this.css('border','1px solid #FF4136');    
+            }       
+        });
+        return this;
+    };
+    // default options
+    let valfechas = function(){
+        $.datepicker.regional['es'] = {
+            closeText: 'Cerrar',
+            prevText: '<Ant',
+            nextText: 'Sig>',
+            currentText: 'Hoy',
+            monthNames: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'],
+            monthNamesShort: ['Ene','Feb','Mar','Abr', 'May','Jun','Jul','Ago','Sep', 'Oct','Nov','Dic'],
+            dayNames: ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'],
+            dayNamesShort: ['Dom','Lun','Mar','Mié','Juv','Vie','Sáb'],
+            dayNamesMin: ['Do','Lu','Ma','Mi','Ju','Vi','Sá'],
+            weekHeader: 'Sm',
+            dateFormat: 'dd/mm/yy',
+            firstDay: 1,
+            isRTL: false,
+            showMonthAfterYear: false,
+            yearSuffix: ''
+        };
+        $.datepicker.setDefaults($.datepicker.regional['es']);
+        let dateFormat = "dd-mm-yy",
+            from = $("#dayspref")
+                .datepicker({
+                      defaultDate: "+1w",
+                      changeMonth: true,
+                      showAnim: "drop",
+                      dateFormat: "dd-mm-yy",
+                      minDate: new Date("January 29, 2018"),
+                      maxDate: new Date("February 02, 2018")
+                }).prop("readonly", "true")
+                .on("change", function () {
+                    to.datepicker("option", "minDate", getDate(this));
+                }),
+            to = $("#daysprefend").datepicker({
+                defaultDate: "+1w",
+                changeMonth: true,
+                showAnim: "drop",
+                dateFormat: "dd-mm-yy",
+                minDate: new Date("January 29, 2018"),
+                maxDate: new Date("February 02, 2018")
+            }).prop("readonly", "true")
+                .on("change", function () {
+                    from.datepicker("option", "maxDate", getDate(this));
+                });
+        function getDate(element) {
+            let date;
+            try {
+                date = $.datepicker.parseDate(dateFormat, element.value);
+            } catch (error) {
+                date = null;
+            }
+            return date;
+        };
+    }
+    let mostrarSismanas = function(){   
+   $('main').children().hide();
+   $('#AllSysmanas').show('faster');
+      $.getJSON("../json/sysmanas.json")
+         .done(insertarSysmanas);
+    }
+
+let insertarSysmanas = function (data) {
+    $(".fotoCartel").on("click", function () {
+        $("#modalCarrusel").remove();
+        $("main").append("<div id='modalCarrusel'></div>");
+        $("#modalCarrusel").append("<div id='carrusel'></div>");
+        $.each(data, function (indice, actividad) {
+            $("#carrusel").append("<div><img src='" + actividad.foto + "' alt=''></div>");
+        });
+        $("#carrusel").slick({
+            dots: true,
+            infinite: true,
+            speed: 1000,
+            slidesToShow: 1,
+            slidesToScroll: 1
+        });
+        $("#modalCarrusel").dialog({
+            modal: true,
+            resizable: false,
+            draggable: false,
+            width: 500,
+            show: {
+                effect: "blind",
+                duration: 1000
+            },
+            hide: {
+                effect: "slideUp",
+                duration: 1000
+            }
+        });
+    });
+};
 }
