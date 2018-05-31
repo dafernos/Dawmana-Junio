@@ -42,7 +42,16 @@
         })
     });
     let inicio= function(){
-        location.reload();
+        mostrar('pinicio');  
+    }
+    let mostrar = function(elemento){
+        ocultarTodo();
+        $('#'+elemento).slideDown('slow')
+            .show();
+    }
+    let ocultarTodo = function(){
+        $main.children('div')
+            .hide();
     }
     let cargaActividades = function (){
         $lunes.html('<tr><td>Actividad</td><td>Ponentes</td><td>Procedencia</td><td>Hora</td></tr>');
@@ -51,9 +60,7 @@
         $jueves.html('<tr><td>Actividad</td><td>Ponentes</td><td>Procedencia</td><td>Hora</td></tr>');
         $viernes.html('<tr><td>Actividad</td><td>Ponentes</td><td>Procedencia</td><td>Hora</td></tr>');
         $extra.html('<tr><td>Actividad</td><td>Ponentes</td><td>Procedencia</td><td>Hora</td></tr>');
-        ocultarTodo();
-        $('#actividad').slideDown('slow')
-            .show();
+        mostrar('actividad');
         $.getJSON({
             url:"json/programa.json",
             success:function(data){
@@ -101,10 +108,8 @@
         });
     };
 
-    let cargarPonentes = function () {
-        ocultarTodo();
-        $('#dponentes').slideDown('slow')
-            .show();
+    let cargarPonentes = function () {       
+        mostrar('dponentes');
         $listar.html('');
         $.getJSON({
             url:"json/programa.json",
@@ -113,7 +118,8 @@
                     $.each(dia,function (index2, actividad) {
                         $ponentes=$('<div></div>')
                             .append($('<img src="'+actividad.foto+'" alt="">'))
-                            .append($('<h3></h3>').html(actividad.nombrePonentes));
+                            .append($('<h3></h3>')
+                                .html(actividad.nombrePonentes));
                         $listar.append($ponentes);
                     });
                 });
@@ -121,22 +127,15 @@
         });
     }
 
-    let registroAsistentes = function () {
-        ocultarTodo();
-        $('#regasistentes').slideDown('slow')
-            .show();
+    let registroAsistentes = function () {       
+        mostrar('regasistentes');
     }
 
-    let accesousuarios = function () {  
-        ocultarTodo();
-        $('#daccesousuarios').slideDown('slow')
-            .show();
+    let accesousuarios = function () {         
+        mostrar('daccesousuarios');
         $login.on('submit',login);
     }
-    let ocultarTodo = function(){
-        $main.children('div')
-            .hide();
-    }
+    
     let login = function () {
         if ($("#usuario").val() === "dario" && $("#pass").val() === "dario"){
             $('#accesousuarios').parent().remove();
@@ -152,8 +151,7 @@
             modificarDatos();
         }else $("#erLogin").html("El usuario o la contraseña no coinciden");
     };
-    let cerrarSession = function(){
-        ocultarTodo();
+    let cerrarSession = function(){       
         $modponencia.remove();
         $moddatos.remove();
         $cerrar.remove();
@@ -162,22 +160,16 @@
             .click();
         $("nav>ul").append($accesousuarios);
     }
-    let registrarPonencia = function () {
-        ocultarTodo();
-        $('#regPonencia').slideDown('slow')
-            .show();
+    let registrarPonencia = function () {       
+        mostrar('regPonencia');
     };
 
     let modificarDatos = function () {
-        ocultarTodo();
-        $('#modDatos').slideDown('slow')
-            .show();
+        mostrar('modDatos');
     };
 
     let carSys = function () {       
-        ocultarTodo();
-        $('#carteles').slideDown('slow')
-            .show();
+        mostrar('carteles');
         $listarCarteles.html("");
         $.getJSON({
             url:"json/sysmanas.json",
@@ -211,15 +203,6 @@
         });
         return this;
     };
-    $.fn.validacion.defaults = {
-        'nombre':/[a-zA-Z]{3,}/,
-        'apellido':/[a-zA-Z]{3,} [a-zA-Z]{3,}/,
-        'dni':/^(\d{8})[- ]?([a-z])$/i,
-        'email':/[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,4}/, 
-        'imagen':/.*\.png/, 
-        'texto':/[\w\d]{3,},?/g, 
-        'numero':/[1-9]+/
-    };
     $.fn.validacionsubmit = function(options) {
         let opts = $.extend(true, $.fn.validacion.defaults, options);
         this.each(function() {     
@@ -237,6 +220,16 @@
         });
         return this;
     };
+    $.fn.validacion.defaults = {
+        'nombre':/[a-zA-Z]{3,}/,
+        'apellido':/[a-zA-Z]{3,} [a-zA-Z]{3,}/,
+        'dni':/^(\d{8})[- ]?([a-z])$/i,
+        'email':/[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,4}/, 
+        'imagen':/.*\.png/, 
+        'texto':/[\w\d]{3,},?/g, 
+        'numero':/[1-9]+/
+    };
+    
     // default options
     let valfechas = function(){
         $.datepicker.regional['es'] = {
@@ -291,42 +284,35 @@
             return date;
         };
     }
-    let mostrarSismanas = function(){   
-   $('main').children().hide();
-   $('#AllSysmanas').show('faster');
-      $.getJSON("../json/sysmanas.json")
-         .done(insertarSysmanas);
-    }
-
-let insertarSysmanas = function (data) {
-    $(".fotoCartel").on("click", function () {
-        $("#modalCarrusel").remove();
-        $("main").append("<div id='modalCarrusel'></div>");
-        $("#modalCarrusel").append("<div id='carrusel'></div>");
-        $.each(data, function (indice, actividad) {
-            $("#carrusel").append("<div><img src='" + actividad.foto + "' alt=''></div>");
+    let insertarSysmanas = function (data) {
+        $(".fotoCartel").on("click", function () {
+            $("#modalCarrusel").remove();
+            $("main").append("<div id='modalCarrusel'></div>");
+            $("#modalCarrusel").append("<div id='carrusel'></div>");
+            $.each(data, function (indice, actividad) {
+                $("#carrusel").append("<div><img src='" + actividad.foto + "' alt=''></div>");
+            });
+            $("#carrusel").slick({
+                dots: true,
+                infinite: true,
+                speed: 1000,
+                slidesToShow: 1,
+                slidesToScroll: 1
+            });
+            $("#modalCarrusel").dialog({
+                modal: true,
+                resizable: false,
+                draggable: false,
+                width: 500,
+                show: {
+                    effect: "blind",
+                    duration: 1000
+                },
+                hide: {
+                    effect: "slideUp",
+                    duration: 1000
+                }
+            });
         });
-        $("#carrusel").slick({
-            dots: true,
-            infinite: true,
-            speed: 1000,
-            slidesToShow: 1,
-            slidesToScroll: 1
-        });
-        $("#modalCarrusel").dialog({
-            modal: true,
-            resizable: false,
-            draggable: false,
-            width: 500,
-            show: {
-                effect: "blind",
-                duration: 1000
-            },
-            hide: {
-                effect: "slideUp",
-                duration: 1000
-            }
-        });
-    });
-};
+    };
 }
